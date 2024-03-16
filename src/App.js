@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
-import { Routes, Route, Link, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, Link, BrowserRouter, useLocation } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { IoSearch } from "react-icons/io5";
@@ -49,21 +49,20 @@ function App() {
     <BrowserRouter>
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary" expanded={expanded}>
         <Container fluid className='top-nav'>
-        <Navbar.Brand className='logo'>
-               <Logo/>
-             </Navbar.Brand>
+          <Navbar.Brand className='logo'>
+            <Logo/>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(!expanded)} />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="d-flex justify-content-evenly w-100 flex-wrap">
-              <Nav.Link as={Link} to="/home" className='text' onClick={handleNavLinkClick}>Home</Nav.Link>
-              <Nav.Link as={Link} to="/work" className='text' onClick={handleNavLinkClick}>Work</Nav.Link>
-              <Nav.Link as={Link} to="/service" className='text' onClick={handleNavLinkClick}>Service</Nav.Link>
-              <Nav.Link as={Link} to="/ourcustomer" className='text' onClick={handleNavLinkClick}>Our Customer</Nav.Link>
-              <Nav.Link as={Link} to="/team" className='text' onClick={handleNavLinkClick}>Team</Nav.Link>
-              <Nav.Link as={Link} to="/contact" className='text' onClick={handleNavLinkClick}>Contact</Nav.Link>
+              <CustomNavLink to="/home" onClick={handleNavLinkClick}>Home</CustomNavLink>
+              <CustomNavLink to="/work" onClick={handleNavLinkClick}>Work</CustomNavLink>
+              <CustomNavLink to="/service" onClick={handleNavLinkClick}>Service</CustomNavLink>
+              <CustomNavLink to="/ourcustomer" onClick={handleNavLinkClick}>Our Customer</CustomNavLink>
+              <CustomNavLink to="/team" onClick={handleNavLinkClick}>Team</CustomNavLink>
+              <CustomNavLink to="/contact" onClick={handleNavLinkClick}>Contact</CustomNavLink>
             </Nav>
           </Navbar.Collapse>
-           
         </Container>
       </Navbar>
       <Routes>
@@ -76,6 +75,23 @@ function App() {
         <Route path="/contact" element={<Contact />} />
       </Routes>
     </BrowserRouter>
+  );
+}
+
+// CustomNavLink component to handle active link
+function CustomNavLink({ to, children, onClick }) {
+  const location = useLocation();
+  const isActive = location.pathname.startsWith(to);
+  return (
+    <Nav.Link
+      as={Link}
+      to={to}
+      className={`text ${isActive ? 'active' : ''}`}
+      style={{ fontWeight: isActive ? 'bold' : 'normal', textDecoration: isActive ? 'underline' : 'none' }}
+      onClick={onClick}
+    >
+      {children}
+    </Nav.Link>
   );
 }
 

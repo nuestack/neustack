@@ -28,6 +28,13 @@ export default function Contact() {
       .then((result) => {
         console.log(result.text);
         alert('Email sent successfully!');
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
       }, (error) => {
         console.error(error.text);
         alert('Failed to send email. Please try again later.');
@@ -52,35 +59,78 @@ export default function Contact() {
   ></iframe>
        </Col>
 
-        <Col className="contact-wstc">
-         
-       <Form className='form-input' onSubmit={handleSubmit}>
-      <Form.Group controlId="formName">
-        <Form.Label>Name</Form.Label>
-        <Form.Control   type="text" placeholder="Enter your name" name="name" value={formData.name} onChange={handleChange} required style={{ width: '100%', display: 'block' }}/>
-      </Form.Group>
-      <Form.Group controlId="formPhone">
-        <Form.Label>Phone</Form.Label>
-        <Form.Control   type="text" placeholder="Enter your phone number" name="phone" value={formData.phone} onChange={handleChange} />
-      </Form.Group>
-      <Form.Group controlId="formEmail">
-        <Form.Label>Email</Form.Label>
-        <Form.Control   type="email" placeholder="Enter your email" name="email" value={formData.email} onChange={handleChange} required />
-      </Form.Group>
-      <Form.Group controlId="formSubject">
-        <Form.Label>Subject</Form.Label>
-        <Form.Control   type="text" placeholder="Enter email subject" name="subject" value={formData.subject} onChange={handleChange} required />
-      </Form.Group>
-      <Form.Group controlId="formMessage">
-        <Form.Label>Message</Form.Label>
-        <Form.Control   as="textarea" rows={3} placeholder="Enter your message" name="message" value={formData.message} onChange={handleChange} required />
-      </Form.Group>
-      <br/>
-      <Button variant="primary" type="submit">
-        Send
-      </Button>
-    </Form>
-        </Col>
+       <Col className="contact-wstc">
+  <Form className='form-input' onSubmit={handleSubmit}>
+    <Form.Group controlId="formName">
+      <Form.Label>Name <span style={{ color: 'red' }}>*</span></Form.Label>
+      <Form.Control
+        type="text"
+        placeholder="Enter your name"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+        style={{ width: '100%', display: 'block' }}
+      />
+    </Form.Group>
+    <Form.Group controlId="formPhone">
+      <Form.Label>Phone <span style={{ color: 'red' }}>*</span></Form.Label>
+      <Form.Control
+        type="tel"
+        pattern="[6789][0-9]{9}"
+        placeholder="Enter your phone number"
+        name="phone"
+        value={formData.phone}
+        onChange={handleChange}
+        title="Phone number must be 10 digits and start with 6, 7, 8, or 9."
+        required
+      />
+    </Form.Group>
+    <Form.Group controlId="formEmail">
+      <Form.Label>Email <span style={{ color: 'red' }}>*</span></Form.Label>
+      <Form.Control
+        type="email"
+        placeholder="Enter your email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
+        title="Please enter a valid Gmail address."
+        required
+      />
+    </Form.Group>
+    <Form.Group controlId="formSubject">
+      <Form.Label>Subject <span style={{ color: 'red' }}>*</span></Form.Label>
+      <Form.Control
+        type="text"
+        placeholder="Enter email subject"
+        name="subject"
+        value={formData.subject}
+        onChange={handleChange}
+        maxLength={50} // Set the maximum length to 50 characters
+        required
+      />
+    </Form.Group>
+    <Form.Group controlId="formMessage">
+      <Form.Label>Message <span style={{ color: 'red' }}>*</span></Form.Label>
+      <Form.Control
+        as="textarea"
+        rows={3}
+        placeholder="Enter your message"
+        name="message"
+        value={formData.message}
+        onChange={handleChange}
+        maxLength={500} // Set the maximum length to 500 characters
+        required
+      />
+    </Form.Group>
+    <br/>
+    <Button variant="primary" type="submit">
+      Send
+    </Button>
+  </Form>
+</Col>
+
 
         <Col className='fbg-text'>
           <h6>
